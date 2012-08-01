@@ -1,0 +1,6 @@
+# name: boost::regex_search(..., ..., ...)
+# key: match
+# --
+boost::regex re(${1:pattern});
+boost::smatch ${2:match};
+boost::regex_search(${3:str}, match, re);

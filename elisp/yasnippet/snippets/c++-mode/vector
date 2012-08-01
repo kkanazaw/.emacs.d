@@ -1,0 +1,4 @@
+# name: std::vector <...>
+# key: vector
+# --
+std::vector<${1:type}> ${2:value};

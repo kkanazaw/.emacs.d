@@ -1,0 +1,9 @@
+# name: foreach (boost::tie(key, value), ...) { ... }
+# key: foreach
+# --
+{
+    std::string key, value;
+    BOOST_FOREACH (boost::tie(key, value),${1:containter}) {
+        $0
+    }
+}

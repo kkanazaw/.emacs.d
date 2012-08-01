@@ -1,0 +1,5 @@
+# name: boost::split(..., ..., ...)
+# key: split
+# --
+std::vector<std::string> ${1:result};
+boost::split($1, ${2:str}, boost::is_any_of("${3: }"));

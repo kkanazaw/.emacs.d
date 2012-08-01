@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: puts 
+# key: puts
+# --
+std::cout << boost::format ("${1:%s}") ${2:%value} << std::endl;

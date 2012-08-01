@@ -1,0 +1,6 @@
+# name: foreach (... ..., ...) { ... }
+# key: foreach
+# --
+BOOST_FOREACH (${1:type} ${2:value}, ${3:containter}) {
+    $0
+}
