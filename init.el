@@ -11,6 +11,7 @@
 (add-to-list 'load-path "~/.emacs.d/elisp/howm")
 (add-to-list 'load-path "~/.emacs.d/elisp/auto-complete")
 (add-to-list 'load-path "~/.emacs.d/elisp/yasnippet")
+(add-to-list 'load-path "~/.emacs.d/elisp/mmm-mode")
 ;;(add-to-list 'load-path "~/.emacs.d/elisp/w3m")
 ;(add-to-list 'load-path "~/.emacs.d/color-theme-6.6.0")
 ;(add-to-list 'load-path "~/.emacs.d/rhtml")
