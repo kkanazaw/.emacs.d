@@ -51,3 +51,7 @@
 (require 'wdired)
 (define-key dired-mode-map "r" 'wdired-change-to-wdired-mode)
 
+(display-time)
+
+(global-set-key (kbd "C-x p") '(lambda () (interactive) (other-window -1)))
+
