@@ -84,12 +84,8 @@ Dmitriy Igrishin's patched version of comint.el."
 ;;引数補完
 ;;(add-hook 'shell-mode-hook 'pcomplete-shell-setup)
 
-;;(require 'bash-completion)
-;;(bash-completion-setup)
-(require 'anything-zsh-screen)
-(eval-after-load
- 'shell
- '(define-key shell-mode-map "\t" 'anything-zsh-screen-simple-complete))
+(require 'bash-completion)
+(bash-completion-setup)
 
 
 ;; shell-modeでの補完 (for drive letter)
