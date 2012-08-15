@@ -1,3 +1,18 @@
+;; ============================================================
+;; shell-mode
+;; ============================================================
+
+;; shell の存在を確認
+(defun skt:shell ()
+  (or (executable-find "zsh")
+      (executable-find "bash")
+      (error "can't find 'shell' command in PATH!!")))
+
+;; Shell 名の設定
+(setq shell-file-name (skt:shell))
+(setenv "SHELL" shell-file-name)
+(setq explicit-shell-file-name shell-file-name)
+
 ;;パスワードの入力を隠す
 (add-hook 'comint-output-filter-functions
           'comint-watch-for-password-prompt)
@@ -7,6 +22,7 @@
 (autoload 'ansi-color-for-comint-mode-on "ansi-color"  "Set `ansi-color-for-comint-mode' to t." t)
 
 (setenv "PAGER" "cat")
+
 
 (add-hook 'shell-mode-hook
           '(lambda ()
@@ -65,6 +81,101 @@ Dmitriy Igrishin's patched version of comint.el."
         ;; comint's "Type space to flush" swallows space. put it back in.
         (setq unread-command-events (listify-key-sequence " "))))
 
-;;補完
-(require 'bash-completion)
-(bash-completion-setup)
+;;引数補完
+;;(add-hook 'shell-mode-hook 'pcomplete-shell-setup)
+
+;;(require 'bash-completion)
+;;(bash-completion-setup)
+(require 'anything-zsh-screen)
+(eval-after-load
+ 'shell
+ '(define-key shell-mode-map "\t" 'anything-zsh-screen-simple-complete))
+
+
+;; shell-modeでの補完 (for drive letter)
+;; http://www.ceres.dti.ne.jp/~m-hase/emacs/dot_meadow.html
+(setq shell-file-name-chars "~/A-Za-z0-9_^$!#%&{}`'.,:()-")
+
+
+;; ============================================================
+;; ansi-term
+;; ============================================================
+(require 'multi-term)
+
+(defvar my-shell-pop-key (kbd "C-c t"))
+(defvar my-ansi-term-toggle-mode-key (kbd "<f2>"))
+
+(defun my-term-switch-line-char ()
+  "Switch `term-in-line-mode' and `term-in-char-mode' in `ansi-term'"
+  (interactive)
+  (cond
+   ((term-in-line-mode)
+    (term-char-mode)
+    (hl-line-mode -1))
+   ((term-in-char-mode)
+    (term-line-mode)
+    (hl-line-mode 1))))
+
+(defadvice anything-c-kill-ring-action (around my-anything-kill-ring-term-advice activate)
+  "In term-mode, use `term-send-raw-string' instead of `insert-for-yank'"
+  (if (eq major-mode 'term-mode)
+      (letf (((symbol-function 'insert-for-yank) (symbol-function 'term-send-raw-string)))
+        ad-do-it)
+    ad-do-it))
+
+(add-hook 'term-mode-hook
+          '(lambda ()	    
+            ;; shell-pop
+            (define-key term-raw-map my-shell-pop-key 'shell-pop)
+	    (define-key term-raw-map (kbd "C-l") nil)
+	    (define-key term-raw-map (kbd "C-p") nil)
+	    (define-key term-raw-map (kbd "C-n") nil)
+	    ;;(define-key term-raw-map (kbd "C-a") nil)
+	    (define-key term-raw-map (kbd "C-e") nil)
+	    (define-key term-raw-map (kbd "C-w") nil)
+	    (define-key term-raw-map (kbd "M-f") nil)
+	    (define-key term-raw-map (kbd "C-f") nil)
+	    (define-key term-raw-map (kbd "C-k") nil)
+	    (define-key term-raw-map (kbd "M-w") nil)
+	    (define-key term-raw-map (kbd "M-h") nil)
+            ;; C-h を term 内文字削除にする
+            (define-key term-raw-map (kbd "C-h") 'term-send-backspace)
+	    (define-key term-raw-map [backspace] 'term-send-backspace)
+            ;; これがないと M-x できなかったり
+            (define-key term-raw-map (kbd "M-x") 'nil)
+            ;; コピー, 貼り付け
+            (define-key term-raw-map (kbd "C-k")
+              (lambda (&optional arg)
+		(interactive "P") (funcall 'kill-line arg) (term-send-raw)))
+            (define-key term-raw-map (kbd "C-y") 'term-paste)
+            (define-key term-raw-map (kbd "M-y") 'anything-show-kill-ring)
+	    (define-key term-raw-map (kbd "C-r") 'anything-complete-shell-history)
+            ;; C-t で line-mode と char-mode を切り替える
+            (define-key term-raw-map  my-ansi-term-toggle-mode-key 'my-term-switch-line-char)
+            (define-key term-mode-map my-ansi-term-toggle-mode-key 'my-term-switch-line-char)
+            ;; Tango!
+            (setq ansi-term-color-vector
+                  [unspecified
+                   "#000000"           ; black
+                   "#ff3c3c"           ; red
+                   "#84dd27"           ; green
+                   "#eab93d"           ; yellow
+                   "#135ecc"           ; blue
+                   "#f47006"           ; magenta
+                   "#89b6e2"           ; cyan
+                   "#ffffff"]          ; white
+                  )
+            ))
+
+;; ============================================================
+;; shell-pop
+;; ============================================================
+
+(require 'shell-pop)
+
+(shell-pop-set-window-height 40)
+(add-to-list 'shell-pop-internal-mode-list '("multi-term" "*terminal<1>*" '(lambda () (multi-term))))
+(shell-pop-set-internal-mode "multi-term")
+(shell-pop-set-internal-mode-shell shell-file-name)
+(global-set-key my-shell-pop-key 'shell-pop)
+

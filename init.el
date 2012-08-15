@@ -13,7 +13,7 @@
 (add-to-list 'load-path "~/.emacs.d/elisp/yasnippet")
 (add-to-list 'load-path "~/.emacs.d/elisp/mmm-mode")
 (add-to-list 'load-path "~/.emacs.d/elisp/magit")
-;;(add-to-list 'load-path "~/.emacs.d/elisp/w3m")
+(add-to-list 'load-path "~/.emacs.d/elisp/emacs-w3m/share/emacs/site-lisp/w3m/")
 ;(add-to-list 'load-path "~/.emacs.d/color-theme-6.6.0")
 ;(add-to-list 'load-path "~/.emacs.d/rhtml")
 ;(add-to-list 'load-path "~/.emacs.d/scala")

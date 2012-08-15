@@ -166,7 +166,7 @@ ZSH completion is only available in the environment for which
   :type '(boolean)
   :group 'zsh-completion)
 
-(defcustom zsh-completion-prog "/bin/zsh.exe"
+(defcustom zsh-completion-prog "/bin/zsh"
   "Name or path of the ZSH executable to run for command-line completion.
 This should be either an absolute path to the ZSH executable or
 the name of the zsh command if it is on Emacs' PATH.  This
@@ -304,9 +304,9 @@ This function is not meant to be called outside of
 	 (after-wordbreak (cdr wordbreak-split)))
     (when (car wordbreak-split)
       (zsh-completion-send (concat
-      			     (zsh-completion-cd-command-prefix)
-      			     "compgen -o default -- "
-      			     (zsh-completion-quote after-wordbreak)))
+			     (zsh-completion-cd-command-prefix)
+			     "\t"
+			     (zsh-completion-quote after-wordbreak)))
       (comint-dynamic-simple-complete
        after-wordbreak
        (zsh-completion-extract-candidates after-wordbreak open-quote)))))
@@ -848,6 +848,7 @@ is set to t."
 	    	   (generate-new-buffer-name " zsh-completion")
 	    	   zsh-completion-prog
 	    	   ))
+
 	    (set-process-query-on-exit-flag process nil)
 	    (let* ((shell-name (file-name-nondirectory zsh-completion-prog))
 		   (startfile1 (concat "~/.emacs_" shell-name ".sh"))
@@ -862,18 +863,17 @@ is set to t."
 	    ;; attempt to turn off unexpected status messages from zsh
 	    ;; if the current version of zsh does not support these options,
 	    ;; the commands will fail silently and be ignored.
-	    (zsh-completion-send "unsetopt checkjobs" process)
-	    (zsh-completion-send "unsetopt mailwarn" process)
-	    (zsh-completion-send "export MAILCHECK=-1" process)
-	    (zsh-completion-send "unset MAIL" process)
-	    (zsh-completion-send "unset MAILPATH" process)
+	    ;; (zsh-completion-send "shopt -u checkjobs" process)
+	    ;; (zsh-completion-send "shopt -u mailwarn" process)
+	    ;; (zsh-completion-send "export MAILCHECK=-1" process)
+	    ;; (zsh-completion-send "export -n MAIL" process)
+	    ;; (zsh-completion-send "export -n MAILPATH" process)
 	    ;; some zsh completion functions use quote_readline to double-quote
 	    ;; strings - which compgen understands but only in some environment.
 	    ;; disable this dreadful business to get a saner way of handling
 	    ;; spaces. Noticed in zsh_completion v1.872.
 	    (zsh-completion-send "function quote_readline { echo \"$1\"; }" process)
-	    (zsh-completion-send "complete -p" process)
-	    ;;(zsh-completion-send "autoload -U compinit" process)
+	    ;;(zsh-completion-send "complete -p" process)
 	    (zsh-completion-build-alist (process-buffer process))
 	    (setq zsh-completion-process process)
 	    (setq process nil)
@@ -960,8 +960,8 @@ candidates."
   (concat
    (zsh-completion-cd-command-prefix)
    (let* ( (command-name (file-name-nondirectory (car words)))
-  	   (compgen-args (cdr (assoc command-name zsh-completion-alist)))
-  	   (stub (nth cword words)) )
+	   (compgen-args (cdr (assoc command-name zsh-completion-alist)))
+	   (stub (nth cword words)) )
      (cond
       ((= cword 0)
        ;; a command. let emacs expand executable, let zsh
@@ -975,24 +975,23 @@ candidates."
       ((or (member "-F" compgen-args) (member "-C" compgen-args))
        ;; custom completion with a function of command
        (let* ( (args (copy-tree compgen-args))
-  	       (function (or (member "-F" args) (member "-C" args)))
-  	       (function-name (car (cdr function))) )
-  	 (setcar function "-F")
-  	 (setcar (cdr function) "__zsh_complete_wrapper")
-  	 (format "__ZSH_COMPLETE_WRAPPER=%s compgen %s -- %s"
-  		 (zsh-completion-quote
-  		  (format "COMP_LINE=%s; COMP_POINT=%s; COMP_CWORD=%s; COMP_WORDS=( %s ); %s \"${COMP_WORDS[@]}\""
-  			  (zsh-completion-quote line)
-  			  pos
-  			  cword
-  			  (zsh-completion-join words)
-  			  (zsh-completion-quote function-name)))
-  		 (zsh-completion-join args)
-  		 (zsh-completion-quote stub))))
+	       (function (or (member "-F" args) (member "-C" args)))
+	       (function-name (car (cdr function))) )
+	 (setcar function "-F")
+	 (setcar (cdr function) "__zsh_complete_wrapper")
+	 (format "__ZSH_COMPLETE_WRAPPER=%s compgen %s -- %s"
+		 (zsh-completion-quote
+		  (format "COMP_LINE=%s; COMP_POINT=%s; COMP_CWORD=%s; COMP_WORDS=( %s ); %s \"${COMP_WORDS[@]}\""
+			  (zsh-completion-quote line)
+			  pos
+			  cword
+			  (zsh-completion-join words)
+			  (zsh-completion-quote function-name)))
+		 (zsh-completion-join args)
+		 (zsh-completion-quote stub))))
       (t
        ;; simple custom completion
-       (format "compgen %s -- %s" (zsh-completion-join compgen-args) stub)))  ))
-  )
+       (format "compgen %s -- %s" (zsh-completion-join compgen-args) stub))))))
 
 ;;;###autoload
 (defun zsh-completion-reset ()
@@ -1052,3 +1051,4 @@ of the command in the zsh completion process buffer."
 
 (provide 'zsh-completion)
 ;;; zsh-completion.el ends here
+
