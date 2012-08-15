@@ -41,45 +41,45 @@
 	  )
 
 ;; http://memo.saitodev.com/home/emacs/#c-c
-(require 'flymake)
-;; 文法チェックの頻度の設定
-(setq flymake-no-changes-timeout 1)
-;; 改行時に文法チェックを行うかどうかの設定
-(setq flymake-start-syntax-check-on-newline nil)
+;; (require 'flymake)
+;; ;; 文法チェックの頻度の設定
+;; (setq flymake-no-changes-timeout 1)
+;; ;; 改行時に文法チェックを行うかどうかの設定
+;; (setq flymake-start-syntax-check-on-newline nil)
 
-(setq gcc-warning-options
-      '("-Wall" "-Wextra" "-Wformat=2" "-Wstrict-aliasing=2" "-Wcast-qual"
-      "-Wcast-align" "-Wwrite-strings" "-Wfloat-equal"
-      "-Wpointer-arith" "-Wswitch-enum"
-      ))
+;; (setq gcc-warning-options
+;;       '("-Wall" "-Wextra" "-Wformat=2" "-Wstrict-aliasing=2" "-Wcast-qual"
+;;       "-Wcast-align" "-Wwrite-strings" "-Wfloat-equal"
+;;       "-Wpointer-arith" "-Wswitch-enum"
+;;       ))
 
-(setq gxx-warning-options
-      `(,@gcc-warning-options "-Woverloaded-virtual" "-Weffc++")
-      )
+;; (setq gxx-warning-options
+;;       `(,@gcc-warning-options "-Woverloaded-virtual" "-Weffc++")
+;;       )
 
-(setq gcc-cpu-options '("-msse" "-msse2" "-mmmx"))
+;; (setq gcc-cpu-options '("-msse" "-msse2" "-mmmx"))
 
-(defun flymake-c-init ()
-  (let* ((temp-file   (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
-         (local-file  (file-relative-name
-                       temp-file
-                       (file-name-directory buffer-file-name)))
-       )
-    (list "gcc" `(,@gcc-warning-options ,@gcc-cpu-options "-fsyntax-only" ,local-file))
-    ))
-(push '(".+\\.c$" flymake-c-init) flymake-allowed-file-name-masks)
-(add-hook 'c-mode-hook '(lambda () (flymake-mode t)) )
+;; (defun flymake-c-init ()
+;;   (let* ((temp-file   (flymake-init-create-temp-buffer-copy
+;;                        'flymake-create-temp-inplace))
+;;          (local-file  (file-relative-name
+;;                        temp-file
+;;                        (file-name-directory buffer-file-name)))
+;;        )
+;;     (list "gcc" `(,@gcc-warning-options ,@gcc-cpu-options "-fsyntax-only" ,local-file))
+;;     ))
+;; (push '(".+\\.c$" flymake-c-init) flymake-allowed-file-name-masks)
+;; (add-hook 'c-mode-hook '(lambda () (flymake-mode t)) )
 
-(defun flymake-c++-init ()
-  (let* ((temp-file   (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
-         (local-file  (file-relative-name
-                       temp-file
-                       (file-name-directory buffer-file-name))))
-    (list "g++" `(,@gxx-warning-options ,@gcc-cpu-options "-fsyntax-only" ,local-file))
-    ))
-(push '(".+\\.h$" flymake-c++-init) flymake-allowed-file-name-masks)
-(push '(".+\\.cc$" flymake-c++-init) flymake-allowed-file-name-masks)
-(add-hook 'c++-mode-hook '(lambda () (flymake-mode t)) )
+;; (defun flymake-c++-init ()
+;;   (let* ((temp-file   (flymake-init-create-temp-buffer-copy
+;;                        'flymake-create-temp-inplace))
+;;          (local-file  (file-relative-name
+;;                        temp-file
+;;                        (file-name-directory buffer-file-name))))
+;;     (list "g++" `(,@gxx-warning-options ,@gcc-cpu-options "-fsyntax-only" ,local-file))
+;;     ))
+;; (push '(".+\\.h$" flymake-c++-init) flymake-allowed-file-name-masks)
+;; (push '(".+\\.cc$" flymake-c++-init) flymake-allowed-file-name-masks)
+;; (add-hook 'c++-mode-hook '(lambda () (flymake-mode t)) )
 

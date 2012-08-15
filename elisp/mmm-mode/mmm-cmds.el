@@ -30,6 +30,7 @@
 
 ;;; Code:
 
+(require 'cl)
 (require 'font-lock)
 (require 'mmm-compat)
 (require 'mmm-vars)
@@ -356,9 +357,7 @@ including global classes."
         ;; If we have a group class, recurse.
         if (plist-get class :classes)
            if (mmm-get-insertion-spec key it)
-              return it
-           else
-              return nil))
+              return it))
 
 ;;}}}
 ;;{{{ Help on Insertion

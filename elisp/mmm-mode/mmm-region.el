@@ -416,7 +416,9 @@ with point at the start of the new region."
 	(overlay-put back-ovl 'match match-back)))
     ;; Update everything and run all the hooks
     (mmm-save-all
-     (goto-char (overlay-start region-ovl))
+     (if (overlay-start region-ovl)
+         ;; This happens if a zero-width region is immediately evaporated
+         (goto-char (overlay-start region-ovl)))
      (mmm-set-current-submode submode)
      (mmm-set-local-variables submode)
      (mmm-run-submode-hook submode)
@@ -470,12 +472,12 @@ Does not handle delimiters.  Use `mmm-make-region'."
 (defun mmm-clear-overlays (&optional start stop strict)
   "Clears all MMM overlays overlapping START and STOP.
 If STRICT, only clear those entirely included in that region."
-  (mapcar #'delete-overlay
-	  (if strict
-	      (mmm-overlays-contained-in (or start (point-min))
-					 (or stop (point-max)))
-	    (mmm-overlays-overlapping (or start (point-min))
-				      (or stop (point-max)))))
+  (mapc #'delete-overlay
+        (if strict
+            (mmm-overlays-contained-in (or start (point-min))
+                                       (or stop (point-max)))
+          (mmm-overlays-overlapping (or start (point-min))
+                                    (or stop (point-max)))))
   (mmm-update-submode-region))
 
 ;;}}}
@@ -505,8 +507,7 @@ is non-nil, don't quit if the info is already there."
           ;; On errors, the temporary buffers don't get deleted, so here
           ;; we get rid of any old ones that may be hanging around.
           (when (buffer-live-p (get-buffer mmm-temp-buffer-name))
-            (save-excursion
-              (set-buffer (get-buffer mmm-temp-buffer-name))
+            (with-current-buffer (get-buffer mmm-temp-buffer-name)
               (set-buffer-modified-p nil)
               (kill-buffer (current-buffer))))
           ;; Now make a new temporary buffer.
@@ -523,7 +524,8 @@ is non-nil, don't quit if the info is already there."
                     ;; Code copied from font-lock.el to detect when font-lock
                     ;; should be on via global-font-lock-mode.
                     (and (or font-lock-defaults
-                             (assq major-mode font-lock-defaults-alist)
+                             (and (boundp 'font-lock-defaults-alist)
+                                  (assq major-mode font-lock-defaults-alist))
                              (assq major-mode font-lock-keywords-alist))
                          (or (eq font-lock-global-modes t)
                              (if (eq (car-safe font-lock-global-modes) 'not)
@@ -563,7 +565,9 @@ is non-nil, don't quit if the info is already there."
       (if region-entry
           (setcdr region-entry region-vars)
         (push (cons mode region-vars)
-              mmm-region-saved-locals-defaults)))))
+              mmm-region-saved-locals-defaults))
+      ;; The temp buffer stuff above wipes fontification.
+      (mmm-refontify-maybe))))
 
 ;;}}}
 ;;{{{ Updating Hooks
@@ -586,11 +590,17 @@ different keymaps, syntax tables, local variables, etc. for submodes."
       (ignore-errors (funcall func)))))
 
 (defun mmm-add-hooks ()
-  (make-local-hook 'post-command-hook)
-  (add-hook 'post-command-hook 'mmm-update-submode-region nil 'local))
+  (if (featurep 'xemacs)
+      (make-local-hook 'post-command-hook))
+  (add-hook 'post-command-hook 'mmm-update-submode-region nil t)
+  (when mmm-parse-when-idle
+    (add-hook 'pre-command-hook 'mmm-mode-reset-timer nil t)
+    (add-hook 'after-change-functions 'mmm-mode-edit nil t)))
 
 (defun mmm-remove-hooks ()
-  (remove-hook 'post-command-hook 'mmm-update-submode-region 'local))
+  (remove-hook 'post-command-hook 'mmm-update-submode-region t)
+  (remove-hook 'pre-command-hook 'mmm-mode-reset-timer t)
+  (remove-hook 'after-change-functions 'mmm-mode-edit t))
 
 ;;}}}
 ;;{{{ Local Variables
@@ -774,16 +784,18 @@ of the REGIONS covers START to STOP."
                 (when (get (car elt) 'mmm-font-lock-mode)
                   (mmm-fontify-region-list (car elt) (cdr elt))))
             (mmm-regions-alist start stop)))
-  ;; With jit-lock, this causes blips in the mode line and menus.
-  ;; Shouldn't be necessary here, since it's in post-command-hook too.
-  ;;(mmm-update-submode-region)
+  ;; It's in `post-command-hook' too, but that's executed before font-lock,
+  ;; so the latter messes up local vars (such as line-indent-function)
+  ;; until after the next command.
+  (mmm-update-submode-region)
   (when loudly (message nil)))
 
 (defun mmm-fontify-region-list (mode regions)
   "Fontify REGIONS, each like \(BEG END), in mode MODE."
   (save-excursion
     (let (;(major-mode mode)
-          (func (get mode 'mmm-fontify-region-function)))
+          (func (get mode 'mmm-fontify-region-function))
+          font-lock-extend-region-functions)
       (mapc #'(lambda (reg)
                   (goto-char (car reg))
                   ;; Here we do the same sort of thing that
