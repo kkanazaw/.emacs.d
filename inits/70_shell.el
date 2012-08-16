@@ -6,6 +6,7 @@
 (defun skt:shell ()
   (or (executable-find "zsh")
       (executable-find "bash")
+      (executable-find "sh")
       (error "can't find 'shell' command in PATH!!")))
 
 ;; Shell 名の設定
