@@ -50,22 +50,30 @@
       (pop-to-buffer buffer)
       (howm-mode t)))
 
+(defun my-anything-howm-title-real-to-display (candidate)
+  (if (string-match "^[0-9]*:\\(.*\\)" candidate) (match-string 1 candidate))
+)
+
 (defvar my-anything-c-howm-recent
   '((name . "最近のメモ")
     (init . (lambda ()
               (with-current-buffer (anything-candidate-buffer 'global) 
-		(setq hash (make-hash-table :test 'equal))
-		(setq candidate-num -1)
-		(mapc (lambda(file)
-			(setq candidate-num (1+ candidate-num))
-			(puthash (concat (number-to-string candidate-num) key-separator (second file)) (first file) recent-hash)
-			) (howm-recent-menu anything-howm-recent-menu-number-limit))
-                (insert (mapconcat 'identity (loop for k being the hash-keys in recent-hash collect k) "\n"))
+		(setq recent-hash (make-hash-table :test 'equal))
+		(setq recent-list (howm-recent-menu anything-howm-recent-menu-number-limit))
+		(let ((candidate-num -1))
+		  (mapc (lambda(file)
+			  (cond ((not (string-match-p "0000-00-00-000000.txt$" (first file)))
+				 (incf candidate-num)
+				 (puthash (concat (number-to-string candidate-num) key-separator (second file)) (first file) recent-hash)
+				 ))) recent-list)
+		  )
+		  (insert (mapconcat 'identity (loop for k being the hash-keys in recent-hash collect k) "\n"))
 		)
 	      )
 	  )
     (candidates-in-buffer)
     (candidate-number-limit . 9999)
+    (real-to-display . my-anything-howm-title-real-to-display)
     (action .
 	    (
        ("Open howm file(s)" .
@@ -104,24 +112,34 @@
 
 (ad-deactivate-regexp "anything-howm-preview")
 
+(defun my-anything-howm-display-buffer (buf)
+  "左右分割で表示する"
+  (delete-other-windows)
+  (split-window (selected-window) 25 t)
+  (other-window 1)
+  (pop-to-buffer buf))
+
+
 (defun my-anything-cached-howm-menu ()
   (interactive)
   (ad-activate-regexp "anything-howm-preview")
-  (let ((anything-display-function 'anything-howm-display-buffer))    
+  (let ((anything-display-function 'my-anything-howm-display-buffer))    
     (if (get-buffer anything-howm-menu-buffer)
         (anything-resume anything-howm-menu-buffer)
-      (my-anything-howm-menu-command)))
+      (my-anything-howm-menu-command))
+    )
   (ad-deactivate-regexp "anything-howm-preview")
   )
 
 (defun my-anything-howm-menu-command ()
   (interactive)
   (ad-activate-regexp "anything-howm-preview")
-  (let ((anything-display-function 'anything-howm-display-buffer))
+  (let ((anything-display-function 'my-anything-howm-display-buffer))
     (anything-other-buffer
      '(anything-c-source-howm-menu
        my-anything-c-howm-recent)
-     anything-howm-menu-buffer))
+     anything-howm-menu-buffer)
+    )
   (ad-deactivate-regexp "anything-howm-preview")
   )
 
