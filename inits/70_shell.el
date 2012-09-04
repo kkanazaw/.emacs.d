@@ -87,6 +87,10 @@ Dmitriy Igrishin's patched version of comint.el."
 
 (require 'bash-completion)
 (bash-completion-setup)
+;; (require 'anything-zsh-screen)
+;; (eval-after-load
+;;     'shell
+;;   '(define-key shell-mode-map "\C-i" 'anything-zsh-screen-simple-complete))
 
 
 ;; shell-modeでの補完 (for drive letter)

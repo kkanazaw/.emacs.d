@@ -36,6 +36,8 @@
 
 (defvar key-separator ":")
 
+(setq my-anything-howm-menu-file-pattern "0000-00-00-000000.txt$")
+
 ;; howm のデータディレクトリへのパス
 (setq anything-howm-data-directory howm-directory)
 
@@ -62,7 +64,7 @@
 		(setq recent-list (howm-recent-menu anything-howm-recent-menu-number-limit))
 		(let ((candidate-num -1))
 		  (mapc (lambda(file)
-			  (cond ((not (string-match-p "0000-00-00-000000.txt$" (first file)))
+			  (cond ((not (string-match-p my-anything-howm-menu-file-pattern (first file)))
 				 (incf candidate-num)
 				 (puthash (concat (number-to-string candidate-num) key-separator (second file)) (first file) recent-hash)
 				 ))) recent-list)
