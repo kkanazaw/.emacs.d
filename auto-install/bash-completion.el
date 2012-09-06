@@ -877,7 +877,7 @@ is set to t."
 	  (setenv "TERM" oldterm)
 	  (when process
 	    (condition-case err
-		;;(bash-completion-kill process)
+		(bash-completion-kill process)
 	      (error nil))))))))
 
 (defun bash-completion-cd-command-prefix ()

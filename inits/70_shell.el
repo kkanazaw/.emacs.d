@@ -4,8 +4,8 @@
 
 ;; shell の存在を確認
 (defun skt:shell ()
-  (or (executable-find "zsh")
-      (executable-find "bash")
+  (or (executable-find "bash")
+      (executable-find "zsh")
       (executable-find "sh")
       (error "can't find 'shell' command in PATH!!")))
 
@@ -27,11 +27,11 @@
 
 (add-hook 'shell-mode-hook
           '(lambda ()
-             ;; zsh のヒストリファイル名を設定
+             ;; bash のヒストリファイル名を設定
              (setq comint-input-ring-file-name "~/.bash_history")
              ;; ヒストリの最大数
              (setq comint-input-ring-size 1024)
-             ;; 既存の zsh ヒストリファイルを読み込み
+             ;; 既存の bash ヒストリファイルを読み込み
              (comint-read-input-ring t)
              ;; zsh like completion (history-beginning-search)
              (local-set-key (kbd "M-p") 'comint-previous-matching-input-from-input)
@@ -39,6 +39,8 @@
 	     (local-set-key (kbd "C-r") 'anything-complete-shell-history)
 	     (use-anything-show-completion 'anything-complete-shell-history
 					   '(length anything-c-source-complete-shell-history))
+             (local-set-key (kbd "^") (lambda() (interactive)(comint-simple-send (get-buffer-process (get-buffer "*shell*")) "cdup")))
+
              ;; 色の設定
              (setq ansi-color-names-vector
                    ["#000000"           ; black
@@ -86,7 +88,24 @@ Dmitriy Igrishin's patched version of comint.el."
 ;;(add-hook 'shell-mode-hook 'pcomplete-shell-setup)
 
 (require 'bash-completion)
+(require 'anything-bash-completion)
 (bash-completion-setup)
+
+(mapc (lambda (func) 
+	  (remove-hook 'shell-dynamic-complete-functions func)
+	  (remove-hook 'shell-command-complete-functions func)
+	  ) '(bash-completion-dynamic-complete 
+	      comint-replace-by-expanded-history 
+	      shell-dynamic-complete-environment-variable 
+	      shell-dynamic-complete-command 
+	      shell-replace-by-expanded-directory 
+	      shell-dynamic-complete-filename 
+	      comint-dynamic-complete-filename))
+(add-hook 'shell-dynamic-complete-functions
+	  'my-bash-completion-dynamic-complete)
+(add-hook 'shell-command-complete-functions
+	  'my-bash-completion-dynamic-complete)
+
 ;; (require 'anything-zsh-screen)
 ;; (eval-after-load
 ;;     'shell
@@ -179,4 +198,6 @@ Dmitriy Igrishin's patched version of comint.el."
 (shell-pop-set-internal-mode "multi-term")
 (shell-pop-set-internal-mode-shell shell-file-name)
 (global-set-key my-shell-pop-key 'shell-pop)
+
+
 
