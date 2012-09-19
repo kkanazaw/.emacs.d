@@ -6,7 +6,7 @@
 (autoload 'howm-menu "howm" "Hitori Otegaru Wiki Modoki" t)
 (setq howm-directory "~/Documents/magicbriefcase/howm/")
 (setq howm-view-use-grep t)
-(setq howm-menu-file "~/Documents/magicbriefcase/howm/0000-00-000000.txt")
+(setq howm-menu-file "~/Documents/magicbriefcase/howm/0000-00-00-000000.txt")
 ;;(setq howm-view-grep-command "egrep")
 ;;(setq howm-view-fgrep-command "fgrep")
 ;;(setq howm-view-grep-option "-Hnr")
