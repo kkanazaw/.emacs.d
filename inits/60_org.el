@@ -64,7 +64,8 @@
          :prepend nil
          :unnarrowed nil
          :kill-buffer t)
-        ))
+        )
+)
 
 ;;mobile org
 (setq org-mobile-files org-agenda-files)
