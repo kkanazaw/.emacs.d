@@ -25,12 +25,6 @@
 ;; init-loader.el
 (require 'init-loader)
 (init-loader-load "~/.emacs.d/inits") ; 設定ファイルがあるディレクトリを指定
-(custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(org-agenda-files (quote ("~/Documents/magicbriefcase/howm/2012/08/2012-08-16-112037.txt"))))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
