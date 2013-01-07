@@ -8,6 +8,9 @@
 (define-key global-map "\C-ct" 'org-todo)
 ;; org-modeでの強調表示を可能にする
 (add-hook 'org-mode-hook 'turn-on-font-lock)
+(add-hook 'org-mode-hook
+          '(lambda ()
+             (set-face-foreground 'org-hide "#282828")))
 ;; org-default-notes-fileのディレクトリ
 (setq org-directory "~/Documents/MagicBriefCase/howm/")
 (setq org-hide-leading-stars t)
