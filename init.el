@@ -22,18 +22,18 @@
 ;(add-to-list 'load-path "~/.emacs.d/erlang-mode")
 ;(add-to-list 'load-path "~/.emacs.d/auto-complete")
 
+;;package.elの設定
+(when (require 'package nil t)
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+;;パッケージリポジトリにMarmaladeと開発者運営のELPAを追加
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives '("ELPA" . "http://tromey.com/elpa/"))
+;;インストールするディレクトリを指定
+(setq package-user-dir(concat user-emacs-directory "elpa"))
+;;インストールしたパッケージにロードパスを通して読み込む
+(package-initialize))
+
 ;; init-loader.el
 (require 'init-loader)
 (init-loader-load "~/.emacs.d/inits") ; 設定ファイルがあるディレクトリを指定
-(custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(org-agenda-files (quote ("~/Documents/magicbriefcase/howm/2012/08/2012-08-16-112037.txt"))))
-(custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- )

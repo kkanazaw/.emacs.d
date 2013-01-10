@@ -4,6 +4,8 @@
 (setq auto-install-directory "~/.emacs.d/auto-install/")
 (auto-install-update-emacswiki-package-name t)
 
+
+
 ;; ---------------------------------------------------
 ;; 基本設定
 ;; ---------------------------------------------------
@@ -56,3 +58,4 @@
 (global-set-key (kbd "C-x p") '(lambda () (interactive) (other-window -1)))
 
 (require 'pcre2el)
+
