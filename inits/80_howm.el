@@ -1,5 +1,6 @@
 ;; howm
 ;;https://github.com/kyanny/emacs-config/blob/master/dot.emacs.d/inits/83_howm.el
+(setq howm-compatible-to-ver1dot3 t)
 (setq howm-menu-lang 'ja)
 (global-set-key "\C-c,," 'howm-menu)
 (global-set-key "\C-c,a" 'howm-list-all)
