@@ -122,7 +122,7 @@ Dmitriy Igrishin's patched version of comint.el."
 ;; ============================================================
 (require 'multi-term)
 
-(defvar my-shell-pop-key (kbd "C-c t"))
+(defvar my-shell-pop-key (kbd "C-x t"))
 (defvar my-ansi-term-toggle-mode-key (kbd "<f2>"))
 
 (defun my-term-switch-line-char ()

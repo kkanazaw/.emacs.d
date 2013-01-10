@@ -4,8 +4,6 @@
 (setq auto-install-directory "~/.emacs.d/auto-install/")
 (auto-install-update-emacswiki-package-name t)
 
-
-
 ;; ---------------------------------------------------
 ;; 基本設定
 ;; ---------------------------------------------------
