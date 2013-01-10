@@ -23,6 +23,18 @@
 ;(add-to-list 'load-path "~/.emacs.d/erlang-mode")
 ;(add-to-list 'load-path "~/.emacs.d/auto-complete")
 
+;;package.elの設定
+(when (require 'package nil t)
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+;;パッケージリポジトリにMarmaladeと開発者運営のELPAを追加
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives '("ELPA" . "http://tromey.com/elpa/"))
+;;インストールするディレクトリを指定
+(setq package-user-dir(concat user-emacs-directory "elpa"))
+;;インストールしたパッケージにロードパスを通して読み込む
+(package-initialize))
+
 ;; init-loader.el
 (require 'init-loader)
 (init-loader-load "~/.emacs.d/inits") ; 設定ファイルがあるディレクトリを指定
