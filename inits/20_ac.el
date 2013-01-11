@@ -16,3 +16,7 @@
 (define-key ac-complete-mode-map "\C-p" 'ac-previous)
 (define-key ac-complete-mode-map (kbd "C-i") nil) ;;C-iで決定されないよう設定（C-iでyasnippetを実行）
 
+(require 'ajc-java-complete-config)
+(set 'ajc-tag-file "~/.emacs.d/elisp/ajc.tag")
+(add-hook 'java-mode-hook 'ajc-java-complete-mode)
+(add-hook 'find-file-hook 'ajc-4-jsp-find-file-hook)

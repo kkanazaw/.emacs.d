@@ -56,3 +56,4 @@
 (global-set-key (kbd "C-x p") '(lambda () (interactive) (other-window -1)))
 
 (require 'pcre2el)
+
