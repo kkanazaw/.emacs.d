@@ -62,10 +62,31 @@
       '(
 	("t" "Todo" entry
          (file+headline nil "Inbox")
-         "** TODO %?\n"
+         "** TODO %?\n %U"
          :prepend nil
          :unnarrowed nil
          :kill-buffer t)
+	("d" "Diet" item
+         (file+datetree "~/Documents/MagicBriefCase/howm/diet.txt")
+         "%? \n"
+         :prepend nil
+         :unnarrowed nil
+         :kill-buffer t)
+	("f" "Funcan" item
+         (file+headline "~/Documents/MagicBriefCase/howm/funcan.txt" "よかったこと、できたこと")
+         "- %? \n"
+         :prepend t
+         :unnarrowed nil
+         :kill-buffer t)
+	("x" "FuncanX" item
+         (file+headline "~/Documents/MagicBriefCase/howm/funcan.txt" "[x]")
+         "- [x]%? \n"
+         :prepend t
+         :unnarrowed nil
+         :kill-buffer t)
+	("i" "Idea" entry
+         (file+headline nil "Ideas")
+         "** %?\n   %i\n   %a\n   %U")
         )
 )
 
