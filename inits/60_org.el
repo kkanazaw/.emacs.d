@@ -30,10 +30,9 @@
 (setq org-display-custom-times t)
 (setq org-time-stamp-custom-formats (quote ("<%Y-%m-%d>" . "<%Y-%m-%d %H-%M>")))
 
-
 ;; TODO状態
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "STARTED(s)" "WAIT(w)" "APPT(a)" "|" "DONE(d)" "SOMEDAY(s)" "CANCELLED(c)")))
+      '((sequence "TODO(t)" "STARTED(s)" "WAITTING(w)" "APPT(a)" "|" "DONE(d)" "DEFERRED(f)" "CANCELLED(c)")))
 ;;計時開始時にタグを変更する
 (setq org-clock-in-switch-to-state "STARTED")
 ;; DONEの時刻を記録
@@ -63,10 +62,31 @@
       '(
 	("t" "Todo" entry
          (file+headline nil "Inbox")
-         "** TODO %?\n"
+         "** TODO %?\n %U"
          :prepend nil
          :unnarrowed nil
          :kill-buffer t)
+	("d" "Diet" item
+         (file+datetree "~/Documents/MagicBriefCase/howm/diet.txt")
+         "%? \n"
+         :prepend nil
+         :unnarrowed nil
+         :kill-buffer t)
+	("f" "Funcan" item
+         (file+headline "~/Documents/MagicBriefCase/howm/funcan.txt" "よかったこと、できたこと")
+         "- %? \n"
+         :prepend t
+         :unnarrowed nil
+         :kill-buffer t)
+	("x" "FuncanX" item
+         (file+headline "~/Documents/MagicBriefCase/howm/funcan.txt" "[x]")
+         "- [x]%? \n"
+         :prepend t
+         :unnarrowed nil
+         :kill-buffer t)
+	("i" "Idea" entry
+         (file+headline nil "Ideas")
+         "** %?\n   %i\n   %a\n   %U")
         )
 )
 

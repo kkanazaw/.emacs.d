@@ -1,8 +1,9 @@
 ;;http://cx4a.org/software/auto-complete/manual.ja.html
 (require 'auto-complete)
 (require 'auto-complete-config)
-(ac-config-default)
 (add-to-list 'ac-dictionary-directories "/home/sanshiro/.emacs.d/elisp/ac-dict")
+(ac-config-default)
+
 (setq ac-use-menu-map t)
 (setq ac-use-comphist nil)
 (setq ac-auto-start 2)
