@@ -1,7 +1,7 @@
 ;;http://cx4a.org/software/auto-complete/manual.ja.html
 (require 'auto-complete)
 (require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories "/home/sanshiro/.emacs.d/elisp/ac-dict")
+(add-to-list 'ac-dictionary-directories "/home/kkanazaw/.emacs.d/elisp/ac-dict")
 (ac-config-default)
 
 (setq ac-use-menu-map t)

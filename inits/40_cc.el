@@ -10,8 +10,10 @@
 
 ;; google-c-style
 (require 'google-c-style)
-(add-hook 'c-mode-common-hook 'google-set-c-style)
-(add-hook 'c-mode-common-hook 'google-make-newline-indent)
+(add-hook 'c-mode-hook 'google-set-c-style)
+(add-hook 'c-mode-hook 'google-make-newline-indent)
+(add-hook 'c++-mode-hook 'google-set-c-style)
+(add-hook 'c++-mode-hook 'google-make-newline-indent)
 
 
 ;; 補完対象のユーザー定義マッチング関数

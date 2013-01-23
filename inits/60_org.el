@@ -30,9 +30,6 @@
 (setq org-display-custom-times t)
 (setq org-time-stamp-custom-formats (quote ("<%Y-%m-%d>" . "<%Y-%m-%d %H-%M>")))
 
-;; TODO状態
-(setq org-todo-keywords
-      '((sequence "TODO(t)" "STARTED(s)" "WAITTING(w)" "APPT(a)" "|" "DONE(d)" "DEFERRED(f)" "CANCELLED(c)")))
 ;;計時開始時にタグを変更する
 (setq org-clock-in-switch-to-state "STARTED")
 ;; DONEの時刻を記録
