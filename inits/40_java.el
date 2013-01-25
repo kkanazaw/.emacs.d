@@ -41,9 +41,9 @@
 
 ;; flymake configuration
 (require 'flymake-cursor)
-(add-hook 'java-mode-hook
-	  '(lambda ()
-	     (flymake-mode t)))
+;; (add-hook 'java-mode-hook
+;; 	  '(lambda ()
+;; 	     (flymake-mode t)))
 (when (load "flymake" t)
   (defun flymake-java-checkstyle-init ()
     (let* ((temp-file (flymake-init-create-temp-buffer-copy
@@ -54,3 +54,11 @@
       (list "~/download/checkstyle-5.6/checkstyle.sh" (list local-file))))
   (add-to-list 'flymake-allowed-file-name-masks
 	       '("\\.java\\'" flymake-java-checkstyle-init)))
+
+(add-hook 'java-mode-common-hook '(lambda ()
+       (add-to-list 'ac-omni-completion-sources
+                      (cons "\\." '(ac-source-semantic)))
+       (add-to-list 'ac-omni-completion-sources
+                      (cons "->" '(ac-source-semantic)))
+       (setq ac-sources '(ac-source-semantic ac-source-yasnippet))
+))
