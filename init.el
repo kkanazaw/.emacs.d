@@ -43,7 +43,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(org-agenda-structure ((t (:background "color-237" :foreground "LightSkyBlue"))))
+ '(org-column ((t (:background "color-237" :strike-through nil :underline nil :slant normal :weight normal :height 1 :family "default")))))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
