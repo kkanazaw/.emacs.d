@@ -4,3 +4,6 @@ auto-save-list/*
 url/*
 *.elc
 elpa/*
+bookmarks
+tramp
+
