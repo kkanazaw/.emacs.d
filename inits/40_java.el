@@ -5,7 +5,8 @@
             (modify-syntax-entry ?@ "< b" java-mode-syntax-table)
 
             (setq tab-width 4)
-            (setq tab-always-indent t)))
+            (setq tab-always-indent t)
+	    ))
 
 ;; eclipse-java-style is the same as the "java" style (copied from
 ;; cc-styles.el) with the addition of (arglist-cont-nonempty . ++) to
@@ -55,10 +56,3 @@
   (add-to-list 'flymake-allowed-file-name-masks
 	       '("\\.java\\'" flymake-java-checkstyle-init)))
 
-(add-hook 'java-mode-common-hook '(lambda ()
-       (add-to-list 'ac-omni-completion-sources
-                      (cons "\\." '(ac-source-semantic)))
-       (add-to-list 'ac-omni-completion-sources
-                      (cons "->" '(ac-source-semantic)))
-       (setq ac-sources '(ac-source-semantic ac-source-yasnippet))
-))

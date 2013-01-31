@@ -627,20 +627,23 @@ instead of 'java.lang java.lang.rel javax.xml javax.xml.ws'"
 if doesn't exists,find from the tag file,
 if more than one class item matched class-name in tag file,
 then imported one of them first"
-  ;; (let* ((imported-class (ajc-caculate-all-imported-class-items))
-  ;;        (matched-class-item
-  ;;         (catch 'found
-  ;;           (dolist (item imported-class)
-  ;;             (when (string-equal class-name (car item))
-  ;;               (throw 'found item))))))
-  ;;   (unless matched-class-item;;if not found from imported section
-  ;;     (let ((matched-class-items
-  ;;            (ajc-find-out-matched-class-item-without-package-prefix class-name t)))
-  ;;       (if (= (length matched-class-items) 1)
-  ;;           (setq matched-class-item (car matched-class-items))
-  ;;         (setq matched-class-item
-  ;;               (car (ajc-insert-import-at-head-of-source-file matched-class-items))))))
-  ;;   matched-class-item)
+  (let* ((imported-class (ajc-caculate-all-imported-class-items))
+         (matched-class-item
+          (catch 'found
+            (dolist (item imported-class)
+              (when (string-equal class-name (car item))
+                (throw 'found item))))
+	  ))
+    (unless matched-class-item;;if not found from imported section
+      (let ((matched-class-items
+             (ajc-find-out-matched-class-item-without-package-prefix class-name t)
+	     ))
+        (if (= (length matched-class-items) 1)
+            (setq matched-class-item (car matched-class-items))
+          ;; (setq matched-class-item
+          ;;       (car (ajc-insert-import-at-head-of-source-file matched-class-items)))
+	  )))
+    matched-class-item)
 )
 
 ;; (ajc-find-out-matched-class-item "java.io" "Fil")
@@ -803,11 +806,11 @@ tag buffer file "
                         (ajc-shrunk-matched-pkgs prefix-string)))
           (let ((index_of_last_dot (string-match "\\.[a-zA-Z_0-9]*$" prefix-string));;add classes
   		(package-prefix)(class-prefix))
-            ;; (when index_of_last_dot
-            ;;   (setq package-prefix (substring-no-properties prefix-string 0 index_of_last_dot))
-            ;;   (setq class-prefix (substring-no-properties prefix-string (+ 1 index_of_last_dot)))
-            ;;   (dolist (element (ajc-find-out-matched-class-item package-prefix class-prefix))
-            ;;     (add-to-list 'matched-pkg-strings (concat package-prefix "." (car element)))))
+            (when index_of_last_dot
+              (setq package-prefix (substring-no-properties prefix-string 0 index_of_last_dot))
+              (setq class-prefix (substring-no-properties prefix-string (+ 1 index_of_last_dot)))
+              (dolist (element (ajc-find-out-matched-class-item package-prefix class-prefix))
+                (add-to-list 'matched-pkg-strings (concat package-prefix "." (car element)))))
   	    ))
    	;;        (setq ajc-is-importing-packages-p t)
         (setq ajc-previous-matched-import-prefix prefix-string) ;;
