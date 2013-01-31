@@ -1,3 +1,4 @@
+(setq auto-install-use-wget nil)
 ; デフォルト言語を日本語に
 (set-language-environment "Japanese")
 ; デフォルト文字コードと、改行コードの設定
