@@ -5,3 +5,8 @@
 
 ;; アジェンダ表示の対象ファイル
 (setq org-agenda-files (quote ("~/My Documents/howm/todo.txt")))
+;; https://github.com/hgschmie/org-confluence
+(require 'confluence)
+(require 'org-confluence)
+
+(add-to-list 'auto-mode-alist '("createpage\\.action$" . confluence-edit-mode))
