@@ -51,7 +51,18 @@
 (require 'wdired)
 (define-key dired-mode-map "r" 'wdired-change-to-wdired-mode)
 
-(display-time)
+;; https://bitbucket.org/sooh/dot.emacs.d/src/4eae87efd029/start.d/init_screen.el
+;; mode line
+(progn
+  (setq display-time-24hr-format 1)     ; 24時間表示
+  ;; (setq display-time-format "%m/%d(%a) %H:%M") ; 月日時分の表示順に %Y- ← 年表示
+  ;; (setq display-time-day-and-date t)              ; 日時を表示
+  (setq display-time-interval 30)                 ; インターバル
+  (display-time))
+;; menu-barを消す
+(menu-bar-mode -1)
+
+
 
 (global-set-key (kbd "C-x p") '(lambda () (interactive) (other-window -1)))
 
