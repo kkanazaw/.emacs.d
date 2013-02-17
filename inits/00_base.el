@@ -51,7 +51,10 @@
 (require 'wdired)
 (define-key dired-mode-map "r" 'wdired-change-to-wdired-mode)
 
+(setq display-time-24hr-format t)
 (display-time)
+
+(menu-bar-mode 0)
 
 (global-set-key (kbd "C-x p") '(lambda () (interactive) (other-window -1)))
 
