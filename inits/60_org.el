@@ -59,7 +59,7 @@
       '(
 	("t" "Todo" entry
          (file+headline nil "Inbox")
-         "** TODO %?\n %U"
+         "** TODO %?\n"
          :prepend nil
          :unnarrowed nil
          :kill-buffer t)

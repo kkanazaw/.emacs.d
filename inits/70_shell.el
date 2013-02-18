@@ -82,7 +82,18 @@ Dmitriy Igrishin's patched version of comint.el."
     (comint-close-completions)
     (if (not unread-command-events)
         ;; comint's "Type space to flush" swallows space. put it back in.
-        (setq unread-command-events (listify-key-sequence " "))))
+        ;; (setq unread-command-events (listify-key-sequence " "))
+      (setq unread-command-events (append
+				   (listify-key-sequence (kbd "<backspace>"))
+				   (listify-key-sequence (kbd "DEL"))
+				   (listify-key-sequence(kbd "C-a"))
+				   (listify-key-sequence(kbd "C-k"))
+				   (listify-key-sequence(kbd "C-e"))
+				   (listify-key-sequence(kbd "C-b"))
+				   (listify-key-sequence(kbd "C-f"))
+				   (listify-key-sequence(kbd "C-g"))
+				   unread-command-events))
+))
 
 ;;引数補完
 ;;(add-hook 'shell-mode-hook 'pcomplete-shell-setup)

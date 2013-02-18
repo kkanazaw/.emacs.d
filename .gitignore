@@ -5,4 +5,5 @@ url/*
 *.elc
 elpa/*
 bookmarks
+tramp
 

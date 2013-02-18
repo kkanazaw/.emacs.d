@@ -1,3 +1,4 @@
+(setq auto-install-use-wget nil)
 ; デフォルト言語を日本語に
 (set-language-environment "Japanese")
 ; デフォルト文字コードと、改行コードの設定
@@ -14,6 +15,8 @@
 (add-to-list 'load-path "~/.emacs.d/elisp/magit")
 (add-to-list 'load-path "~/.emacs.d/elisp/emacs-w3m/share/emacs/site-lisp/w3m/")
 (add-to-list 'load-path "~/.emacs.d/elisp/org")
+(add-to-list 'load-path "~/.emacs.d/elisp/confluence-el")
+(add-to-list 'load-path "~/.emacs.d/elisp/org-confluence")
 ;(add-to-list 'load-path "~/.emacs.d/color-theme-6.6.0")
 ;(add-to-list 'load-path "~/.emacs.d/rhtml")
 ;(add-to-list 'load-path "~/.emacs.d/scala")
@@ -35,6 +38,7 @@
   (package-initialize)
 )
 
+(server-start)
 ;; init-loader.el
 (require 'init-loader)
 (init-loader-load "~/.emacs.d/inits") ; 設定ファイルがあるディレクトリを指定
@@ -44,7 +48,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "color-239" :foreground "#eeeeec" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 1 :width normal :foundry "default" :family "default"))))
- '(howm-mode-title-face ((t (:foreground "blue")))))
+ '(howm-mode-title-face ((t (:foreground "blue"))))
+ '(confluence-code-face ((t (:foreground "color-46" :weight bold)))))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
