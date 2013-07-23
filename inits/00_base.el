@@ -73,15 +73,3 @@
 (setenv "LC_ALL" "C")
 (autoload 'svn-status "dsvn" "Run `svn status'." t)
 (autoload 'svn-update "dsvn" "Run `svn update'." t)
-
-;;psvn
-;; (require 'psvn)
-;; (setq svn-status-verbose nil)
-;; (setq svn-status-hide-unmodified t)
-;; ;; ログにファイル名を出さない
-;; (setq svn-status-default-log-arguments nil)
-;; ;; プレフィクスをC-x sにする
-;; ;; (global-set-key (kbd "C-x s") svn-global-keymap)
-;; (setq svn-status-svn-file-coding-system 'utf-8)
-;; (setenv "LC_ALL" "ja_JP.UTF-8")
-
