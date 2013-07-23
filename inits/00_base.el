@@ -68,3 +68,10 @@
 
 (require 'pcre2el)
 
+;; dsvn
+(require 'vc-svn)
+(setenv "LC_ALL" "C")
+(autoload 'svn-status "dsvn" "Run `svn status'." t)
+(autoload 'svn-update "dsvn" "Run `svn update'." t)
+
+

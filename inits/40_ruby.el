@@ -38,3 +38,5 @@
 ;;       (flymake-mode-on)))
 ;; (add-hook 'ruby-mode-hook 'ruby-mode-hook-flymake-init)
 
+(require 'inf-ruby)
+(require 'bundler)
