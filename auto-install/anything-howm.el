@@ -61,6 +61,8 @@
 ;;         ))
 
 ;; Change Log
+;; 1.1.1: ファイル一覧をハッシュでもつことで高速化
+;;      : ファイル選択時に内容をプレビュー
 ;; 1.1.0: リファクタ anything-c-source-howm-recent の内部の無名関数に名前を付与
 ;; 1.0.9: prefix を anything-howm- から ah: へ変更
 ;; 1.0.8: 拡張子 .homn での判定処理を
@@ -96,13 +98,14 @@
 
 (defvar ah:howm-full-path-directory (expand-file-name howm-directory))
 (defvar ah:key-separator ":")
-(defvar ah:menu-file-pattern "0000-00-00-000000.txt$")
+(defvar ah:menu-file-pattern "0000-00-00-000000.howm$")
 (defvar ah:recent-hash)
 (defvar ah:recent-list)
 
+
 ;;; Version
 
-(defconst anything-howm-version "1.0.8"
+(defconst anything-howm-version "1.1.0"
   "The version number of the file anything-howm.el.")
 
 (defun anything-howm-version (&optional here)
@@ -140,7 +143,6 @@ With prefix arg HERE, insert it at point."
        ("Delete file(s)" . ah:delete-marked-files)))
     (persistent-action . anything-howm-persistent-action)
     (cleanup . anything-c-howm-recent-cleanup)))
-
 
 (defun anything-c-howm-recent-init ()
   (with-current-buffer (anything-candidate-buffer 'global) 
@@ -237,6 +239,7 @@ With prefix arg HERE, insert it at point."
     (if (get-buffer ah:menu-buffer)
         (anything-resume ah:menu-buffer)
       (ah:menu-command))))
+
 
 (defun ah:menu-command ()
   (interactive)
