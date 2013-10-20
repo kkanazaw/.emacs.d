@@ -35,117 +35,119 @@
 ;; 「最近のメモ」をいくつ表示するか
 (setq anything-howm-recent-menu-number-limit 600)
 
-(defvar key-separator ":")
+;;(defvar key-separator ":")
 
 (setq my-anything-howm-menu-file-pattern "0000-00-00-000000.txt$")
 
 ;; howm のデータディレクトリへのパス
 (setq anything-howm-data-directory howm-directory)
 
-(setq recent-hash (make-hash-table :test 'equal))
+;; (setq recent-hash (make-hash-table :test 'equal))
 
-(defun my-anything-howm-persistent-action (candidate)
-  (let ((buffer (get-buffer-create anything-howm-persistent-action-buffer)))
-      (with-current-buffer buffer
-        (erase-buffer)
-        (insert-file-contents (gethash candidate recent-hash))
-        (goto-char (point-min)))
-      (pop-to-buffer buffer)
-      (howm-mode t)))
+;; (defun my-anything-howm-persistent-action (candidate)
+;;   (let ((buffer (get-buffer-create anything-howm-persistent-action-buffer)))
+;;       (with-current-buffer buffer
+;;         (erase-buffer)
+;;         (insert-file-contents (gethash candidate recent-hash))
+;;         (goto-char (point-min)))
+;;       (pop-to-buffer buffer)
+;;       (howm-mode t)))
 
-(defun my-anything-howm-title-real-to-display (candidate)
-  (if (string-match "^[0-9]*:\\(.*\\)" candidate) (match-string 1 candidate))
-)
+;; (defun my-anything-howm-title-real-to-display (candidate)
+;;   (if (string-match "^[0-9]*:\\(.*\\)" candidate) (match-string 1 candidate))
+;; )
 
-(defvar my-anything-c-howm-recent
-  '((name . "最近のメモ")
-    (init . (lambda ()
-              (with-current-buffer (anything-candidate-buffer 'global) 
-		(setq recent-hash (make-hash-table :test 'equal))
-		(setq recent-list (howm-recent-menu anything-howm-recent-menu-number-limit))
-		(let ((candidate-num -1))
-		  (mapc (lambda(file)
-			  (cond ((not (string-match-p my-anything-howm-menu-file-pattern (first file)))
-				 (incf candidate-num)
-				 (puthash (concat (number-to-string candidate-num) key-separator (second file)) (first file) recent-hash)
-				 ))) recent-list)
-		  )
-		  (insert (mapconcat 'identity (loop for k being the hash-keys in recent-hash collect k) "\n"))
-		)
-	      )
-	  )
-    (candidates-in-buffer)
-    (candidate-number-limit . 9999)
-    (real-to-display . my-anything-howm-title-real-to-display)
-    (action .
-	    (
-       ("Open howm file(s)" .
- 	  (lambda(candidate)(find-file (gethash candidate recent-hash))))
-       ("Open howm file in other window" .
-          (lambda (candidate)
-            (find-file-other-window
-             (find-file (gethash candidate recent-hash)))))
-       ("Open howm file in other frame" .
-          (lambda (candidate)
-            (find-file-other-frame
-             (find-file (gethash candidate recent-hash)))))
-       ("Create new memo" .
-          (lambda (template)
-            (anything-howm-create-new-memo "")))
-       ("Create new memo on region" .
-          (lambda (template)
-            (anything-howm-create-new-memo (anything-howm-set-selected-text))))
-       ("Delete file(s)" . anything-howm-delete-marked-files)))
-    (persistent-action . my-anything-howm-persistent-action)
-    (cleanup .
-      (lambda ()
-        (anything-aif (get-buffer anything-howm-persistent-action-buffer)
-          (kill-buffer it))))
-    (migemo)
-    ))
-
-
-;;移動した時に内容をプレビューする
-(defadvice anything-move-selection-common (after anything-howm-preview) 
-  (when (string= (cdr (assq 'name (anything-get-current-source)
-			    )) "最近のメモ" )
-    (anything-execute-persistent-action)
-    )
-  )
-
-(ad-deactivate-regexp "anything-howm-preview")
-
-(defun my-anything-howm-display-buffer (buf)
-  "左右分割で表示する"
-  (delete-other-windows)
-  (split-window (selected-window) 25 t)
-  (other-window 1)
-  (pop-to-buffer buf))
+;; (defvar my-anything-c-howm-recent
+;;   '((name . "最近のメモ")
+;;     (init . (lambda ()
+;;               (with-current-buffer (anything-candidate-buffer 'global) 
+;; 		(setq recent-hash (make-hash-table :test 'equal))
+;; 		(setq recent-list (howm-recent-menu anything-howm-recent-menu-number-limit))
+;; 		(let ((candidate-num -1))
+;; 		  (mapc (lambda(file)
+;; 			  (cond ((not (string-match-p my-anything-howm-menu-file-pattern (first file)))
+;; 				 (incf candidate-num)
+;; 				 (puthash (concat (number-to-string candidate-num) key-separator (second file)) (first file) recent-hash)
+;; 				 ))) recent-list)
+;; 		  )
+;; 		  (insert (mapconcat 'identity (loop for k being the hash-keys in recent-hash collect k) "\n"))
+;; 		)
+;; 	      )
+;; 	  )
+;;     (candidates-in-buffer)
+;;     (candidate-number-limit . 9999)
+;;     (real-to-display . my-anything-howm-title-real-to-display)
+;;     (action .
+;; 	    (
+;;        ("Open howm file(s)" .
+;;  	  (lambda(candidate)(find-file (gethash candidate recent-hash))))
+;;        ("Open howm file in other window" .
+;;           (lambda (candidate)
+;;             (find-file-other-window
+;;              (find-file (gethash candidate recent-hash)))))
+;;        ("Open howm file in other frame" .
+;;           (lambda (candidate)
+;;             (find-file-other-frame
+;;              (find-file (gethash candidate recent-hash)))))
+;;        ("Create new memo" .
+;;           (lambda (template)
+;;             (anything-howm-create-new-memo "")))
+;;        ("Create new memo on region" .
+;;           (lambda (template)
+;;             (anything-howm-create-new-memo (anything-howm-set-selected-text))))
+;;        ("Delete file(s)" . anything-howm-delete-marked-files)))
+;;     (persistent-action . my-anything-howm-persistent-action)
+;;     (cleanup .
+;;       (lambda ()
+;;         (anything-aif (get-buffer anything-howm-persistent-action-buffer)
+;;           (kill-buffer it))))
+;;     (migemo)
+;;     ))
 
 
-(defun my-anything-cached-howm-menu ()
-  (interactive)
-  (ad-activate-regexp "anything-howm-preview")
-  (let ((anything-display-function 'my-anything-howm-display-buffer))    
-    (if (get-buffer anything-howm-menu-buffer)
-        (anything-resume anything-howm-menu-buffer)
-      (my-anything-howm-menu-command))
-    )
-  (ad-deactivate-regexp "anything-howm-preview")
-  )
+;; ;;移動した時に内容をプレビューする
+;; (defadvice anything-move-selection-common (after anything-howm-preview) 
+;;   (when (string= (cdr (assq 'name (anything-get-current-source)
+;; 			    )) "最近のメモ" )
+;;     (anything-execute-persistent-action)
+;;     )
+;;   )
 
-(defun my-anything-howm-menu-command ()
-  (interactive)
-  (ad-activate-regexp "anything-howm-preview")
-  (let ((anything-display-function 'my-anything-howm-display-buffer))
-    (anything-other-buffer
-     '(anything-c-source-howm-menu
-       my-anything-c-howm-recent)
-     anything-howm-menu-buffer)
-    )
-  (ad-deactivate-regexp "anything-howm-preview")
-  )
+;; (ad-deactivate-regexp "anything-howm-preview")
 
-(global-set-key (kbd "C-c 2") 'my-anything-howm-menu-command)
-(global-set-key (kbd "C-c 3") 'my-anything-cached-howm-menu)
+;; (defun my-anything-howm-display-buffer (buf)
+;;   "左右分割で表示する"
+;;   (delete-other-windows)
+;;   (split-window (selected-window) 25 t)
+;;   (other-window 1)
+;;   (pop-to-buffer buf))
+
+
+;; (defun my-anything-cached-howm-menu ()
+;;   (interactive)
+;;   (ad-activate-regexp "anything-howm-preview")
+;;   (let ((anything-display-function 'my-anything-howm-display-buffer))    
+;;     (if (get-buffer anything-howm-menu-buffer)
+;;         (anything-resume anything-howm-menu-buffer)
+;;       (my-anything-howm-menu-command))
+;;     )
+;;   (ad-deactivate-regexp "anything-howm-preview")
+;;   )
+
+;; (defun my-anything-howm-menu-command ()
+;;   (interactive)
+;;   (ad-activate-regexp "anything-howm-preview")
+;;   (let ((anything-display-function 'my-anything-howm-display-buffer))
+;;     (anything-other-buffer
+;;      '(anything-c-source-howm-menu
+;;        my-anything-c-howm-recent)
+;;      anything-howm-menu-buffer)
+;;     )
+;;   (ad-deactivate-regexp "anything-howm-preview")
+;;   )
+
+;; (global-set-key (kbd "C-c 2") 'my-anything-howm-menu-command)
+;; (global-set-key (kbd "C-c 3") 'my-anything-cached-howm-menu)
+(global-set-key (kbd "C-c 2") 'ah:menu-command)
+(global-set-key (kbd "C-c 3") 'ah:cached-howm-menu)
 
