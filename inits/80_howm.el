@@ -33,7 +33,7 @@
 (require 'cl)
 
 ;; 「最近のメモ」をいくつ表示するか
-(setq anything-howm-recent-menu-number-limit 600)
+(setq ah:recent-menu-number-limit 600)
 
 (setq ah:menu-file-pattern "0000-00-00-000000.txt$")
 

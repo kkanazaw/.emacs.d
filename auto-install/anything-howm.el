@@ -173,7 +173,7 @@ With prefix arg HERE, insert it at point."
   (push '(migemo) anything-c-source-howm-recent))
 
 (defun ah:select-file-by-title (title)
-  (find-file (gethash candidate ah:recent-hash)))
+  (find-file (gethash title ah:recent-hash)))
 
 (defun ah:find-files (candidate)
   (anything-aif (anything-marked-candidates)
