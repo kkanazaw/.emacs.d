@@ -62,8 +62,6 @@
 ;; menu-barを消す
 (menu-bar-mode -1)
 
-
-
 (global-set-key (kbd "C-x p") '(lambda () (interactive) (other-window -1)))
 
 (require 'pcre2el)
