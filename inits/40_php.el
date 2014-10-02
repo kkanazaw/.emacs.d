@@ -24,6 +24,7 @@
 
 
 (when (require 'flymake nil t)
+  (custom-set-variables '(php-executable "/home/y/bin64/php"))
   (global-set-key "\C-cd" 'flymake-display-err-menu-for-current-line)
   ;; PHP
   (when (not (fboundp 'flymake-php-init))

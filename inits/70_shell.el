@@ -198,17 +198,3 @@ Dmitriy Igrishin's patched version of comint.el."
                   )
             ))
 
-;; ============================================================
-;; shell-pop
-;; ============================================================
-
-(require 'shell-pop)
-
-(shell-pop-set-window-height 45)
-(add-to-list 'shell-pop-internal-mode-list '("multi-term" "*terminal<1>*" '(lambda () (multi-term))))
-(shell-pop-set-internal-mode "multi-term")
-(shell-pop-set-internal-mode-shell shell-file-name)
-(global-set-key my-shell-pop-key 'shell-pop)
-
-
-
