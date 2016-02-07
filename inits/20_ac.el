@@ -6,7 +6,7 @@
 
 (setq ac-use-menu-map t)
 (setq ac-use-comphist nil)
-(setq ac-auto-start 3)
+(setq ac-auto-start 1)
 (setq ac-candidate-limit 20)
 
 (global-set-key "\M-/" 'ac-start)

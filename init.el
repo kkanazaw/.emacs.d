@@ -5,6 +5,7 @@
 (set-default-coding-systems 'utf-8-unix)
 (prefer-coding-system 'utf-8-unix)
 
+
 ;; load-path
 (add-to-list 'load-path "~/.emacs.d/elisp")
 (add-to-list 'load-path "~/.emacs.d/auto-install")
@@ -113,6 +114,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(anything-c-moccur-anything-idle-delay 0.1)
+ '(anything-c-moccur-enable-auto-look-flag t)
+ '(anything-c-moccur-enable-initial-pattern t)
+ '(anything-c-moccur-higligt-info-line-flag t)
+ '(anything-kill-ring-threshold 5)
  '(custom-enabled-themes (quote (tango-dark)))
- '(php-executable "/home/y/bin64/php"))
+ '(php-executable "/home/y/bin64/php")
+ '(php-mode-coding-style (quote psr2)))
 

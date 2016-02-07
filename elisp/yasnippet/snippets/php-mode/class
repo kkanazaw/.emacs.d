@@ -2,21 +2,10 @@
 #name : class ... 
 #group : definitions
 # --
-class ${1:`(replace-regexp-in-string
- "^_+" ""
- (mapconcat
-  #'identity
-  (split-string
-   ((lambda (a)
-      (substring a (let ((case-fold-search nil))
-                     (string-match "\\\\(/[A-Z][a-zA-Z0-9]+\\\\)+$" a )
-                     ))
-      )
-    (file-name-sans-extension (buffer-file-name))
-    ) "/") "_"))`}
+class ${1:Hoge}
 {
-   public function __construct()
-   {
-      $0
-   }
+    public function __construct()
+    {
+       $0
+    }
 }

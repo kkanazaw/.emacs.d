@@ -1,16 +1,22 @@
 (require 'php-mode)
 (setq auto-mode-alist
       (cons '("\\.php\\'" . php-mode) auto-mode-alist))
-(setq php-mode-force-pear t)
+(setq auto-mode-alist
+      (cons '("\\.inc\\'" . php-mode) auto-mode-alist))
+;;(setq php-mode-force-pear t)
+(global-set-key (kbd "C-M-_") 'indent-region)
 
 
 ;; php-mode-hook
 (add-hook 'php-mode-hook
           (lambda ()
-	    (c-set-style "bsd")
+	    (c-set-style "psr2")
 	    (setq tab-width 4)
 	    (setq c-basic-offset 4)
 	    (setq indent-tabs-mode nil)
+	    (require 'php-align)
+	    (php-align-setup)
+	    (define-key c-mode-base-map "\C-ca" 'align-current)
             (require 'php-completion)
             (php-completion-mode t)
             (define-key php-mode-map (kbd "C-o") 'phpcmp-complete) ;php-completionの補完実行キーバインドの設定
