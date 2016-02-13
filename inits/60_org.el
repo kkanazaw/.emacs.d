@@ -12,7 +12,7 @@
           '(lambda ()
              (set-face-foreground 'org-hide "#282828")))
 ;; org-default-notes-fileのディレクトリ
-(setq org-directory "~/Documents/MagicBriefCase/howm/")
+(setq org-directory "~/howm/")
 (setq org-hide-leading-stars t)
 
 ;; org-default-notes-fileのファイル名
@@ -20,7 +20,7 @@
 (setq org-agenda-files (list org-directory))
 
 ;; アジェンダ表示の対象ファイル
-(setq org-agenda-files (quote ("~/Documents/magicbriefcase/howm/todo.txt")))
+(setq org-agenda-files (quote ("~/howm/todo.txt")))
 
 (add-hook 'org-mode-hook 'howm-mode)
 (setq org-startup-truncated nil)
@@ -64,19 +64,19 @@
          :unnarrowed nil
          :kill-buffer t)
 	("d" "Diet" item
-         (file+datetree "~/Documents/MagicBriefCase/howm/diet.txt")
+         (file+datetree "~/howm/diet.txt")
          "%? \n"
          :prepend nil
          :unnarrowed nil
          :kill-buffer t)
 	("f" "Funcan" item
-         (file+headline "~/Documents/MagicBriefCase/howm/funcan.txt" "よかったこと、できたこと")
+         (file+headline "~/howm/funcan.txt" "よかったこと、できたこと")
          "- %? \n"
          :prepend t
          :unnarrowed nil
          :kill-buffer t)
 	("x" "FuncanX" item
-         (file+headline "~/Documents/MagicBriefCase/howm/funcan.txt" "[x]")
+         (file+headline "~/howm/funcan.txt" "[x]")
          "- [x]%? \n"
          :prepend t
          :unnarrowed nil
@@ -89,7 +89,7 @@
 
 ;;mobile org
 (setq org-mobile-files org-agenda-files)
-(setq org-mobile-inbox-for-pull "~/Documents/MagicBriefCase/howm/flagged.txt")
+(setq org-mobile-inbox-for-pull "~/howm/flagged.txt")
 (setq org-mobile-directory "~/Dropbox/MobileOrg")
 (setq org-refile-targets '((org-agenda-files :level . 1)))
 (setq org-mobile-creating-agendas nil)
