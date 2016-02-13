@@ -13,6 +13,7 @@
 (add-to-list 'load-path "~/.emacs.d/elisp/howm")
 (add-to-list 'load-path "~/.emacs.d/elisp/confluence-el")
 (add-to-list 'load-path "~/.emacs.d/elisp/org-confluence")
+(add-to-list 'load-path "~/.emacs.d/elisp/magit") ;;24.3以下だとmagit入らないので
 
 (require 'cl)
 ;;package.elの設定
@@ -65,7 +66,7 @@
       powerline
       flex-autopair
       auto-install
-      magit
+      ;;magit
       web-mode
       all-ext
       shell-history
