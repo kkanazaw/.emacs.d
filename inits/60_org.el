@@ -25,7 +25,7 @@
 (add-hook 'org-mode-hook 'howm-mode)
 (setq org-startup-truncated nil)
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-(add-to-list 'auto-mode-alist '("\\.txt$" . org-mode))
+;;(add-to-list 'auto-mode-alist '("\\.txt$" . org-mode))
 ;;(setq howm-view-title-header "*") ;; ← howm のロードより前に書くこと
 (setq org-display-custom-times t)
 (setq org-time-stamp-custom-formats (quote ("<%Y-%m-%d>" . "<%Y-%m-%d %H-%M>")))

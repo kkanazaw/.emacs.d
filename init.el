@@ -10,10 +10,10 @@
 (add-to-list 'load-path "~/.emacs.d/elisp")
 (add-to-list 'load-path "~/.emacs.d/auto-install")
 (add-to-list 'load-path "~/.emacs.d/elisp/skk")
-(add-to-list 'load-path "~/.emacs.d/elisp/howm")
+;(add-to-list 'load-path "~/.emacs.d/elisp/howm")
 (add-to-list 'load-path "~/.emacs.d/elisp/confluence-el")
 (add-to-list 'load-path "~/.emacs.d/elisp/org-confluence")
-(add-to-list 'load-path "~/.emacs.d/elisp/magit") ;;24.3以下だとmagit入らないので
+;;(add-to-list 'load-path "~/.emacs.d/elisp/magit") ;;24.3以下だとmagit入らないので
 
 (require 'cl)
 ;;package.elの設定
@@ -66,7 +66,7 @@
       powerline
       flex-autopair
       auto-install
-      ;;magit
+      magit
       web-mode
       all-ext
       shell-history
@@ -84,6 +84,8 @@
       recentf-ext
       shell-pop
       zlc
+      js2-mode
+      howm
       ))
 
   (let ((not-installed (loop for x in installing-package-list
@@ -121,6 +123,5 @@
  '(anything-c-moccur-higligt-info-line-flag t)
  '(anything-kill-ring-threshold 5)
  '(custom-enabled-themes (quote (tango-dark)))
- '(php-executable "/home/y/bin64/php")
  '(php-mode-coding-style (quote psr2)))
 

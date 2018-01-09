@@ -99,7 +99,7 @@ Dmitriy Igrishin's patched version of comint.el."
 ;;(add-hook 'shell-mode-hook 'pcomplete-shell-setup)
 
 (require 'bash-completion)
-(require 'anything-bash-completion)
+;;(require 'anything-bash-completion)
 (bash-completion-setup)
 
 (mapc (lambda (func) 
