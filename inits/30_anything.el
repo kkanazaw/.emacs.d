@@ -1,4 +1,4 @@
-(require 'anything-exuberant-ctags)
+;;(require 'anything-exuberant-ctags)
 (require 'anything-startup)
 
 
@@ -16,4 +16,6 @@
    " *my-anything-filelist+*"))
 
 (global-set-key "\C-l" 'my-anything-filelist+)
+
+
 

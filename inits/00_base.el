@@ -1,8 +1,8 @@
 ;auto-install設定
 ;http://d.hatena.ne.jp/rubikitch/20091221/autoinstall
-(require 'auto-install)
-(setq auto-install-directory "~/.emacs.d/auto-install/")
-(auto-install-update-emacswiki-package-name nil)
+;;(require 'auto-install)
+;;(setq auto-install-directory "~/.emacs.d/auto-install/")
+;;(auto-install-update-emacswiki-package-name nil)
 
 ;; ---------------------------------------------------
 ;; 基本設定
@@ -71,3 +71,6 @@
 (setenv "LC_ALL" "C")
 (autoload 'svn-status "dsvn" "Run `svn status'." t)
 (autoload 'svn-update "dsvn" "Run `svn update'." t)
+
+(require 'projectile)
+(projectile-global-mode)
