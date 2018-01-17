@@ -10,8 +10,8 @@
 ;;(setq-default js2-basic-offset 2)
 
 
-(require 'nvm)
-(nvm-use (caar (last (nvm--installed-versions))))
+;;(require 'nvm)
+;;(nvm-use (caar (last (nvm--installed-versions))))
 
 (add-to-list 'auto-mode-alist '("\\.js$" . js-mode))
 

@@ -72,5 +72,10 @@
 (autoload 'svn-status "dsvn" "Run `svn status'." t)
 (autoload 'svn-update "dsvn" "Run `svn update'." t)
 
-(require 'projectile)
-(projectile-global-mode)
+;;(require 'projectile)
+;;(projectile-global-mode)
+
+;; コピペした時に崩れるのをふせぐ
+;; https://qiita.com/fewpoco/items/1a025249b5e346ed7e07
+(electric-indent-mode 0)
+

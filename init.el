@@ -37,8 +37,8 @@
       color-theme
       color-theme-monokai
       color-moccur
-      php-mode
-      inf-php
+      php-mode 
+     ;;inf-php
       python-mode
       markdown-mode
       scss-mode
@@ -77,8 +77,8 @@
       bash-completion
       dsvn
       multi-term
-      pcre2el
-      perl-completion
+      pcre2el 
+     ;;perl-completion
       php-completion
       popup
       recentf-ext
@@ -123,5 +123,12 @@
  '(anything-c-moccur-higligt-info-line-flag t)
  '(anything-kill-ring-threshold 5)
  '(custom-enabled-themes (quote (tango-dark)))
+ '(git-commit-setup-hook
+   (quote
+    (git-commit-save-message git-commit-setup-changelog-support git-commit-propertize-diff with-editor-usage-message)))
+ '(package-selected-packages
+   (quote
+    (howm js2-mode zlc shell-pop recentf-ext php-completion yasnippet yaml-mode web-mode smart-compile shell-history scss-mode ruby-electric ruby-block rspec-mode python-mode powerline php-mode pcre2el open-junk-file multi-term mmm-mode markdown-mode magit init-loader helm-git helm-flymake helm-descbinds haskell-mode haml-mode google-c-style flymake-shell flymake-ruby flymake-php flymake-cursor flex-autopair evil-numbers evil-nerd-commenter evil-leader dsvn color-theme-solarized color-theme-monokai color-moccur bundler bash-completion auto-install all-ext ac-python)))
+ '(php-executable "/usr/bin/php")
  '(php-mode-coding-style (quote psr2)))
 
