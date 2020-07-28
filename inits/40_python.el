@@ -1,22 +1,30 @@
-(add-hook 'python-mode-hook
-          (lambda ()
-            (define-key python-mode-map "\"" 'electric-pair)
-            (define-key python-mode-map "\'" 'electric-pair)
-            (define-key python-mode-map "(" 'electric-pair)
-            (define-key python-mode-map "[" 'electric-pair)
-            (define-key python-mode-map "{" 'electric-pair)))
-(defun electric-pair ()
-  "Insert character pair without sournding spaces"
-  (interactive)
-  (let (parens-require-spaces)
-    (insert-pair)))
+(use-package elpy
+  :ensure t
+  :init
+  (elpy-enable))
+;; (add-hook 'python-mode-hook
+;;           (lambda ()
+;;             (define-key python-mode-map "\"" 'electric-pair)
+;;             (define-key python-mode-map "\'" 'electric-pair)
+;;             (define-key python-mode-map "(" 'electric-pair)
+;;             (define-key python-mode-map "[" 'electric-pair)
+;;             (define-key python-mode-map "{" 'electric-pair)
+;; 	    )
+;; 	  )
+;; (defun electric-pair ()
+;;   "Insert character pair without sournding spaces"
+;;   (interactive)
+;;   (let (parens-require-spaces)
+;;     (insert-pair)))
 
-(add-hook 'python-mode-hook '(lambda () 
-     (define-key python-mode-map "\C-m" 'newline-and-indent)))
+;; (add-hook 'python-mode-hook '(lambda () 
+;;      (define-key python-mode-map "\C-m" 'newline-and-indent)))
+;; (add-hook 'python-mode-hook 'flycheck-mode)
 
 ;;auto-completeの設定のあとに書く
-(require 'ac-python) 
-(add-to-list 'ac-modes 'python-2-mode)
+;;(require 'ac-python) 
+;;(add-to-list 'ac-modes 'python-3-mode)
+
 
 ;; ;;; flymake for python
 ;; (add-hook 'find-file-hook 'flymake-find-file-hook)

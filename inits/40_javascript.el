@@ -17,7 +17,7 @@
 
 (add-hook 'js-mode-hook
           #'(lambda ()
-	      (flycheck-mode)
+	      ;;(flycheck-mode)
               (require 'js)
               (setq js-indent-level 2
                     js-expr-indent-offset 2

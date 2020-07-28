@@ -40,7 +40,7 @@
 
 (mmm-add-classes
  '((html-js
-    :submode js2-mode
+    :submode js-mode
     :front "<script[^>]*>"
     :back "</script>")))
 (mmm-add-mode-ext-class nil "\\.html*" 'html-js)
