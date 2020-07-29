@@ -19,9 +19,8 @@
 ;;package.elの設定
 (when (require 'package nil t)
   ;;パッケージリポジトリにmelpa,Marmalade,開発者運営のELPAを追加
-  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-  (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-  (add-to-list 'package-archives '("ELPA" . "http://tromey.com/elpa/"))
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+  (add-to-list 'package-archives '("ELPA" . "https://elpa.gnu.org/packages/"))
   ;;インストールするディレクトリを指定
   (setq package-user-dir(concat user-emacs-directory "elpa"))
   ;;インストールしたパッケージにロードパスを通して読み込む
@@ -37,8 +36,8 @@
       color-theme
       color-theme-monokai
       color-moccur
-      php-mode
-      inf-php
+      php-mode 
+     ;;inf-php
       python-mode
       markdown-mode
       scss-mode
@@ -52,9 +51,6 @@
       flymake-php
       flymake-shell
       flymake-cursor
-      helm-flymake
-      helm-descbinds
-      helm-git
       google-c-style
       open-junk-file
       smart-compile
@@ -77,8 +73,8 @@
       bash-completion
       dsvn
       multi-term
-      pcre2el
-      perl-completion
+      pcre2el 
+     ;;perl-completion
       php-completion
       popup
       recentf-ext
@@ -86,6 +82,7 @@
       zlc
       js2-mode
       howm
+      use-package
       ))
 
   (let ((not-installed (loop for x in installing-package-list
@@ -98,7 +95,7 @@
 
 )
 
-(server-start)
+;;(server-start)
 ;; init-loader.el
 (require 'init-loader)
 (init-loader-load "~/.emacs.d/inits") ; 設定ファイルがあるディレクトリを指定
@@ -109,8 +106,8 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "color-239" :foreground "#eeeeec" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 1 :width normal :foundry "default" :family "default"))))
  '(confluence-code-face ((t (:foreground "color-46" :weight bold))))
- '(flymake-errline ((t (:inherit error :background "red"))))
- '(flymake-warnline ((t (:inherit warning :background "yellow"))))
+ '(flymake-error ((t (:foreground "white" :background "red"))))
+ '(flymake-warning ((t (:foreground "white" :background "yellow"))))
  '(howm-mode-title-face ((t (:foreground "blue")))))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -121,7 +118,15 @@
  '(anything-c-moccur-enable-auto-look-flag t)
  '(anything-c-moccur-enable-initial-pattern t)
  '(anything-c-moccur-higligt-info-line-flag t)
- '(anything-kill-ring-threshold 5)
+ '(anything-kill-ring-threshold 5 t)
  '(custom-enabled-themes (quote (tango-dark)))
+ '(flycheck-disabled-checkers (quote (javascript-jshint javascript-jscs)))
+ '(git-commit-setup-hook
+   (quote
+    (git-commit-save-message git-commit-setup-changelog-support git-commit-propertize-diff with-editor-usage-message)))
+ '(package-selected-packages
+   (quote
+    (csv-mode helm-core helm elpy jedi typescript-mode slim-mode ctags add-node-modules-path flycheck vue-mode projectile howm js2-mode zlc shell-pop recentf-ext php-completion yasnippet yaml-mode web-mode smart-compile shell-history scss-mode ruby-electric ruby-block rspec-mode python-mode powerline php-mode pcre2el open-junk-file multi-term mmm-mode markdown-mode magit init-loader haskell-mode haml-mode google-c-style flymake-shell flymake-ruby flymake-php flymake-cursor flex-autopair evil-numbers evil-nerd-commenter evil-leader dsvn color-theme-solarized color-theme-monokai color-moccur bundler bash-completion auto-install all-ext ac-python)))
+ '(php-executable "/usr/bin/php")
  '(php-mode-coding-style (quote psr2)))
 

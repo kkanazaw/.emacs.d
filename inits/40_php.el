@@ -3,6 +3,9 @@
       (cons '("\\.php\\'" . php-mode) auto-mode-alist))
 (setq auto-mode-alist
       (cons '("\\.inc\\'" . php-mode) auto-mode-alist))
+;;tnql用
+(setq auto-mode-alist
+      (cons '("\\.cls\\'" . php-mode) auto-mode-alist))
 ;;(setq php-mode-force-pear t)
 (global-set-key (kbd "C-M-_") 'indent-region)
 
@@ -13,7 +16,9 @@
 	    (c-set-style "psr2")
 	    (setq tab-width 4)
 	    (setq c-basic-offset 4)
-	    (setq indent-tabs-mode nil)
+	    ;;(setq indent-tabs-mode nil)
+	    ;; tnql用にタブ区切りに
+	    (setq indent-tabs-mode t)
 	    (require 'php-align)
 	    (php-align-setup)
 	    (define-key c-mode-base-map "\C-ca" 'align-current)
@@ -25,34 +30,41 @@
                                ac-source-words-in-same-mode-buffers
                                ac-source-php-completion
                                ac-source-filename
-                               ))))
+                               ))
+	    (define-key php-mode-map  (kbd "C-]") 'ac-php-find-symbol-at-point)   ;goto define
+	    (define-key php-mode-map  (kbd "C-t") 'ac-php-location-stack-back   ) ;go back
+	    ))
 
 
+(add-hook 'php-mode-hook 'flycheck-mode)
 
-(when (require 'flymake nil t)
-  (custom-set-variables '(php-executable "/usr/bin/php"))
-  (global-set-key "\C-cd" 'flymake-display-err-menu-for-current-line)
-  ;; PHP
-  (when (not (fboundp 'flymake-php-init))
-    (defun flymake-php-init ()
-      (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                         'flymake-create-temp-inplace))
-             (local-file (file-relative-name
-                          temp-file
-                          (file-name-directory buffer-file-name))))
-        (list "php" (list "-f" local-file "-l"))))
-    (setq flymake-allowed-file-name-masks
-          (append
-           flymake-allowed-file-name-masks
-           '(("\.php[345]?$" flymake-php-init))))
-    (setq flymake-err-line-patterns
-          (cons
-           '("\(\(?:Parse error\|Fatal error\|Warning\): .*\) in \(.*\) on line \([0-9]+\)" 2 3 nil 1)
-           flymake-err-line-patterns)))
+;; (when (require 'flymake nil t)
+;;   (custom-set-variables '(php-executable "/usr/bin/php"))
+;;   (global-set-key "\C-cd" 'flymake-display-err-menu-for-current-line)
+;;   ;; PHP
+;;   (when (not (fboundp 'flymake-php-init))
+;;     (defun flymake-php-init ()
+;;       (let* ((temp-file (flymake-init-create-temp-buffer-copy
+;;                          'flymake-create-temp-inplace))
+;;              (local-file (file-relative-name
+;;                           temp-file
+;;                           (file-name-directory buffer-file-name))))
+;;         (list "php" (list "-f" local-file "-l"))))
+;;     (setq flymake-allowed-file-name-masks
+;;           (append
+;;            flymake-allowed-file-name-masks
+;;            '(("\.php[345]?$" flymake-php-init)
+;; 	     ("\.cls$" flymake-php-init)
+;; 	     ("\.inc$" flymake-php-init)
+;; 	     )))
+;;     (setq flymake-err-line-patterns
+;;           (cons
+;;            '("\(\(?:Parse error\|Fatal error\|Warning\): .*\) in \(.*\) on line \([0-9]+\)" 2 3 nil 1)
+;;            flymake-err-line-patterns)))
   
-  (add-hook 'php-mode-hook
-            '(lambda () (flymake-mode t)))
+;;   (add-hook 'php-mode-hook
+;;             '(lambda () (flymake-mode t)))
 
-  )
+;;   )
 
-(require 'inf-php)
+;;(require 'inf-php)

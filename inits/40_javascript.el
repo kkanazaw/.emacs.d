@@ -10,14 +10,14 @@
 ;;(setq-default js2-basic-offset 2)
 
 
-(require 'nvm)
-(nvm-use (caar (last (nvm--installed-versions))))
+;;(require 'nvm)
+;;(nvm-use (caar (last (nvm--installed-versions))))
 
 (add-to-list 'auto-mode-alist '("\\.js$" . js-mode))
 
 (add-hook 'js-mode-hook
           #'(lambda ()
-	      (flycheck-mode)
+	      ;;(flycheck-mode)
               (require 'js)
               (setq js-indent-level 2
                     js-expr-indent-offset 2
