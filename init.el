@@ -34,7 +34,7 @@
       evil-nerd-commenter
       evil-numbers
       color-theme
-      color-theme-monokai
+      ;;color-theme-monokai
       color-moccur
       php-mode 
      ;;inf-php
@@ -54,14 +54,14 @@
       google-c-style
       open-junk-file
       smart-compile
-      color-theme-solarized
-      ruby-block
+      ;;color-theme-solarized
+      ;;ruby-block
       ruby-electric
       inf-ruby
       bundler
       powerline
       flex-autopair
-      auto-install
+      ;;auto-install
       magit
       web-mode
       all-ext
@@ -69,13 +69,13 @@
       org
       mmm-mode
       yasnippet
-      ac-python
+      ;;ac-python
       bash-completion
       dsvn
       multi-term
       pcre2el 
      ;;perl-completion
-      php-completion
+      ;;php-completion
       popup
       recentf-ext
       shell-pop
@@ -119,14 +119,12 @@
  '(anything-c-moccur-enable-initial-pattern t)
  '(anything-c-moccur-higligt-info-line-flag t)
  '(anything-kill-ring-threshold 5 t)
- '(custom-enabled-themes (quote (tango-dark)))
- '(flycheck-disabled-checkers (quote (javascript-jshint javascript-jscs)))
+ '(custom-enabled-themes '(tango-dark))
+ '(flycheck-disabled-checkers '(javascript-jshint javascript-jscs))
  '(git-commit-setup-hook
-   (quote
-    (git-commit-save-message git-commit-setup-changelog-support git-commit-propertize-diff with-editor-usage-message)))
+   '(git-commit-save-message git-commit-setup-changelog-support git-commit-propertize-diff with-editor-usage-message))
  '(package-selected-packages
-   (quote
-    (csv-mode helm-core helm elpy jedi typescript-mode slim-mode ctags add-node-modules-path flycheck vue-mode projectile howm js2-mode zlc shell-pop recentf-ext php-completion yasnippet yaml-mode web-mode smart-compile shell-history scss-mode ruby-electric ruby-block rspec-mode python-mode powerline php-mode pcre2el open-junk-file multi-term mmm-mode markdown-mode magit init-loader haskell-mode haml-mode google-c-style flymake-shell flymake-ruby flymake-php flymake-cursor flex-autopair evil-numbers evil-nerd-commenter evil-leader dsvn color-theme-solarized color-theme-monokai color-moccur bundler bash-completion auto-install all-ext ac-python)))
+   '(po-mode xref dumb-jump helm-ghq csv-mode helm-core helm elpy jedi typescript-mode slim-mode ctags add-node-modules-path flycheck vue-mode projectile howm js2-mode zlc shell-pop recentf-ext php-completion yasnippet yaml-mode web-mode smart-compile shell-history scss-mode ruby-electric ruby-block rspec-mode python-mode powerline php-mode pcre2el open-junk-file multi-term mmm-mode markdown-mode magit init-loader haskell-mode haml-mode google-c-style flymake-shell flymake-ruby flymake-php flymake-cursor flex-autopair evil-numbers evil-nerd-commenter evil-leader dsvn color-theme-solarized color-theme-monokai color-moccur bundler bash-completion auto-install all-ext ac-python))
  '(php-executable "/usr/bin/php")
- '(php-mode-coding-style (quote psr2)))
+ '(php-mode-coding-style 'psr2))
 
