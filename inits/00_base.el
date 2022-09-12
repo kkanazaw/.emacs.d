@@ -79,3 +79,5 @@
 ;; https://qiita.com/fewpoco/items/1a025249b5e346ed7e07
 (electric-indent-mode 0)
 
+(add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+(setq xref-show-definitions-function #'xref-show-definitions-completing-read)
